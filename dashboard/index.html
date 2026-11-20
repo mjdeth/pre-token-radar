@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pre-Token Radar — implied launch values from the DefiLlama snapshot</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <div>
+      <h1>Pre-Token Radar</h1>
+      <p class="tagline">Protocols that record no token yet, ranked by what a launch could be worth — and how to farm each one before it happens.</p>
+    </div>
+  </div>
+  <dl class="stats" id="stats"></dl>
+</header>
+
+<section class="model-strip" aria-label="How the implied value is computed">
+  <h2>How a value gets on this board</h2>
+  <ol>
+    <li><strong>Comparables.</strong> For each category, take the protocols whose tokens already trade and find their median market-cap to TVL ratio, shrunk toward the global median when a category has few traded names. Cut the same traded set by TVL size and the pattern is steep: big protocols trade at far lower multiples than small ones.</li>
+    <li><strong>Base value.</strong> A pre-token protocol's base value is its TVL times a blend of its category ratio and its size-band ratio, each cut weighted by how many traded protocols stand behind it, so a one-name category can inform a price but never carry it. No name is hardcoded; every figure comes from the snapshot itself, and both comparable tables are published below.</li>
+    <li><strong>Adjustments.</strong> Seven-day TVL momentum, years run with no token, and chain reach each nudge the base up or down. Every row's detail view shows its own three factors.</li>
+  </ol>
+</section>
+
+<main>
+  <section class="board-pane" aria-label="The board">
+    <div class="controls">
+      <label class="ctl grow">Search
+        <input id="q" type="search" placeholder="Protocol name or slug" autocomplete="off">
+      </label>
+      <label class="ctl">Category
+        <select id="cat"></select>
+      </label>
+      <label class="ctl">Chain
+        <select id="chain"></select>
+      </label>
+      <label class="ctl">Sort
+        <select id="sort">
+          <option value="rank">Rank</option>
+          <option value="implied">Implied value</option>
+          <option value="tvl">TVL</option>
+          <option value="change">7d change</option>
+          <option value="watchlist">Watchlist first</option>
+        </select>
+      </label>
+      <label class="ctl check">
+        <input id="wl" type="checkbox"> Watchlist only
+      </label>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="table-wrap">
+      <table id="board">
+        <thead>
+          <tr>
+            <th class="num">#</th><th>Protocol</th><th>Category</th><th class="num">TVL</th>
+            <th class="num">7d</th><th class="num">Implied launch value</th><th>Signal</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="detail-pane" id="detail" aria-label="Protocol detail"></section>
+</main>
+
+<section class="model-tables" aria-label="The model's own comparable tables">
+  <h2>The model's own tables</h2>
+  <p class="tables-note" id="tables-note"></p>
+  <div class="tables-grid">
+    <div class="table-wrap">
+      <table id="cat-table">
+        <thead><tr><th>Category</th><th class="num">Traded</th><th class="num">Median mcap/TVL</th><th class="num">Ratio used</th></tr></thead>
+        <tbody id="cat-rows"></tbody>
+      </table>
+    </div>
+    <div class="table-wrap">
+      <table id="band-table">
+        <thead><tr><th>TVL size band</th><th class="num">Traded</th><th class="num">Median mcap/TVL</th></tr></thead>
+        <tbody id="band-rows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p id="foot-note"></p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
